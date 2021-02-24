@@ -1,0 +1,1 @@
+Villes = new Meteor.Collection('villes');

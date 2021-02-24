@@ -1,0 +1,179 @@
+<template name="tmpltePageCreationSite">
+  {{> tmplteNavigationCreationSite }}
+  <div class="container" id="idContainerCreationSite">
+    {{> tmplteCreationSite }}
+    <div class="bandeauDuBas"></div>
+    <div class="siteCache" id="idSiteCache"></div>
+  </div>
+</template>
+
+<template name="tmplteCreationSite">
+  <div class="accueil starter-template" id="idCreationSite">
+    <p class="intro text-center text-md-left majuscule">Création d'un site</p>
+    {{#if currentUser}}
+      <div id="login-buttons" class="login-buttons-dropdown-align-">  
+        <div class='login-link-and-dropdown-list'>
+          <a class='login-link-text' id='login-name-link'>
+            {{#each email in currentUser.emails}}
+              {{ email.address }} ▾
+            {{/each}}
+          </a>
+        </div>
+      </div>
+      <h1 class="titreSurMobile">Nouveau site</h1>
+      <p class="ligneSeparation"></p>
+      <p class="ligneSeparation crea"></p>
+      <div class="formCreation">
+        <form class="js-new-site form-horizontal col-lg-10" id="idNewSite">
+          <div class="form-group">
+            <select name="nomEspace" class="form-control majuscule" id="idEspaceSite" required>
+              {{#each lEspaces}}
+                <option value="{{espaceNom}}">{{espaceNom}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" name="quartierSite" class="form-control majuscule" id="idQuartierSite" maxlength="30" placeholder="Quartier" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="villeSite" class="form-control majuscule" id="idVilleSite" maxlength="30" placeholder="Ville" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <input type="number" name="contactSite" class="form-control majuscule" id="idContactSite" maxlength="9" placeholder="Tél" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="mailSite" class="form-control" id="idMailSite" maxlength="60" placeholder="Mail" autocomplete="true" required>
+          </div>
+          <br>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureFeriesSite">Ouverture jours fériés</label>
+            <input type="time" name="ouvertureFeriesSite" class="form-control col-lg-4" id="idOuvertureFeriesSite" placeholder="Ouverture fériés" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureFeriesSite">Fermeture jours fériés</label>
+            <input type="time" name="fermetureFeriesSite" class="form-control col-lg-4" id="idFermetureFeriesSite" placeholder="Fermeture fériés" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureLundiSite">Ouverture lundi</label>
+            <input type="time" name="ouvertureLundiSite" class="form-control col-lg-4" id="idOuvertureLundiSite" placeholder="Ouverture lundi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureLundiSite">Fermeture lundi</label>
+            <input type="time" name="fermetureLundiSite" class="form-control col-lg-4" id="idFermetureLundiSite" placeholder="Fermeture lundi" autocomplete="true" required>
+          </div>
+          <div class="form-group"> 
+            <label class="col-lg-6" for="idOuvertureMardiSite">Ouverture mardi</label>
+            <input type="time" name="ouvertureMardiSite" class="form-control col-lg-4" id="idOuvertureMardiSite" placeholder="Ouverture mardi" autocomplete="true" required>
+          </div>
+          <div class="form-group">            
+            <label class="col-lg-6" for="idFermetureMardiSite">Fermeture mardi</label>
+            <input type="time" name="fermetureMardiSite" class="form-control col-lg-4" id="idFermetureMardiSite" placeholder="Fermeture mardi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureMercrediSite">Ouverture mercredi</label>
+            <input type="time" name="ouvertureMercrediSite" class="form-control col-lg-4" id="idOuvertureMercrediSite" placeholder="Ouverture mercredi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureMercrediSite">Fermeture mercredi</label>
+            <input type="time" name="fermetureMercrediSite" class="form-control col-lg-4" id="idFermetureMercrediSite" placeholder="Fermeture mercredi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureJeudiSite">Ouverture jeudi</label>
+            <input type="time" name="ouvertureJeudiSite" class="form-control col-lg-4" id="idOuvertureJeudiSite" placeholder="Ouverture jeudi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureJeudiSite">Fermeture jeudi</label>
+            <input type="time" name="fermetureJeudiSite" class="form-control col-lg-4" id="idFermetureJeudiSite" placeholder="Fermeture jeudi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureVendrediSite">Ouverture vendredi</label>
+            <input type="time" name="ouvertureVendrediSite" class="form-control col-lg-4" id="idOuvertureVendrediSite" placeholder="Ouverture vendredi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureVendrediSite">Fermeture vendredi</label>
+            <input type="time" name="fermetureVendrediSite" class="form-control col-lg-4" id="idFermetureVendrediSite" placeholder="Fermeture vendredi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureSamediSite">Ouverture samedi</label>
+            <input type="time" name="ouvertureSamediSite" class="form-control col-lg-4" id="idOuvertureSamediSite" placeholder="Ouverture samedi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureSamediSite">Fermeture samedi</label>
+            <input type="time" name="fermetureSamediSite" class="form-control col-lg-4" id="idFermetureSamediSite" placeholder="Fermeture samedi" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idOuvertureDimancheSite">Ouverture dimanche</label>
+            <input type="time" name="ouvertureDimancheSite" class="form-control col-lg-4" id="idOuvertureDimancheSite" placeholder="Ouverture dimanche" autocomplete="true" required>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-6" for="idFermetureDimancheSite">Fermeture dimanche</label>
+            <input type="time" name="fermetureDimancheSite" class="form-control col-lg-4" id="idFermetureDimancheSite" placeholder="Fermeture dimanche" autocomplete="true" required>
+          </div>
+          <div class="form-group"><label class="col-lg-6" for="idEmplacementSite">Emplacement</label>
+            <textarea name="emplacementSite" class="form-control" id="idEmplacementSite" maxlength="500" rows="5" required></textarea></div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default majuscule">Valider</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal" tabindex="-1" role="dialog" id="modalCreationSite">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>Confirmez-vous la création du site ?</p>
+              <button type="button" class="btn btn-primary js-new-site-confirm majuscule" data-target="#idNewSite">Créer</button>
+              <button type="button" class="btn btn-secondary majuscule" data-dismiss="modal">Annuler</button>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="modal" tabindex="-1" role="dialog" id="modalSiteAlreadyCreated">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>Site déjà existant</p>
+              <button type="button" class="btn btn-secondary majuscule" data-dismiss="modal">Annuler</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{ else }}
+      <div id="login-buttons" class="login-buttons-dropdown-align-">
+        <div class="login-link-and-dropdown-list login-form-sign-in">
+          <a class="login-link-text" id="login-sign-in-link">Sign in ▾</a>
+        </div>
+      </div>
+      <div class="seConnecter"><span>Se</span> connecter</div>
+    {{ /if }}    
+  </div>  
+</template>
+
+<template name="tmplteNavigationCreationSite">
+  <nav id="navigationAuthCreaSites" class="navbar navbar-inverse navbar-fixed-top navigation">
+    <div id="idNavigationSite" class="container authentification">
+      <div class="navbar-header">
+        {{#if currentUser}}
+          <button type="button" class="navbar-toggle collapsed btnCreation" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        {{ /if }}
+        <a class="navbar-brand" href="/">
+          <span class="pacifico fairRed">Derniermarché</span><span class="pacifico bleuFonce">.com</span>
+        </a>
+      </div>
+      {{#if currentUser}}
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="text-center bold" href="/authentification/espaces">Espaces disponibles</a></li>
+            <li><a class="text-center bold" href="/authentification/sites">Sites disponibles</a></li>
+            <li><a class="text-center bold" href="/authentification/creationespace">Création d'un espace</a></li>
+            <li><a class="text-center bold active" href="#">Création d'un site</a></li>
+          </ul>
+        </div>
+      {{ /if }}
+    </div>
+  </nav>
+</template>

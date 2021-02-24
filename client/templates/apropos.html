@@ -1,0 +1,79 @@
+<template name="tmpltePageAPropos">
+  {{> tmplteNavigationAPropos }}
+  <div class="container" id="idContainerAPropos">
+    {{> tmplteAPropos }}
+    <div class="bandeauDuBas"></div>
+    <div class="siteCache" id="idSiteCache"></div>
+  </div>
+</template>
+
+<template name="tmplteAPropos">
+  <div class="accueil starter-template" id="idAPropos">
+    <div class="triangle"></div>
+    <p class="intro text-center text-md-left">A propos</p>
+    <p id="idImageApropos" class="imageApropos"></p>
+    <div class="aPropos">
+      <div class="aProposDiv">
+        <h1 class="aProposFirstTitre">"On ne jette pas la nourriture"</h1>
+        <p>
+          Cette phrase nous l'avons entendue à maintes reprises. Il a toujours été question de dire NON au gaspillage alimentaire. C'est la raison pour laquelle nous nous proposons de mettre en vitrine des produits en voie de péremption que vous pourrez retrouver chez des commerçants locaux et dans des grandes surfaces, à des prix très intéressants.           
+        </p>
+      </div>
+      <div class="aProposDiv">
+        <h1>La date de consommation</h1>
+        <p>
+          Des études montrent que certaines denrées (gâteaux secs, café, boîtes de conserve, etc) passée la date de péremption, et ce pour plusieurs jours encore, ne présentent pas de danger pour la santé du consommateur. Elles peuvent en revanche perdre en qualité gustative et/ou nutritive.
+        </p>
+        <p>
+          La lutte contre le gaspillage alimentaire passe aussi par l'information et la sensibilisation autour de ces concepts de dates, notamment la Date Limite de Consommation, et la Date de Durabilité Minimale. 
+        </p>
+        <p>
+          <a href="https://www.anses.fr/fr/content/date-limite-de-consommation-dlc-et-date-de-durabilit%C3%A9-minimale-ddm#:~:text=Les%20produits%20alimentaires%20pr%C3%A9emball%C3%A9s%20mentionnent,limite%20de%20consommation%20est%20d%C3%A9pass%C3%A9e." class="enSavoirPlus" target="_blank" title="Agence nationale française de sécurité sanitaire">EN SAVOIR PLUS</a> 
+        </p>
+        <div class="dateConso">
+          <p>
+            Par ailleurs la loi n°2015/018 du 21 décembre 2015 régissant l'activité commerciale au Cameroun, dans son titre V au chapitre I, article 68, interdit la vente des produits périmés ou impropres à la consommation humaine et animale. Nous vous suggérons ainsi de prêter grande attention aux différentes dates de production et d’expiration avant achat, et surtout avant consommation de chaque produit. 
+          </p>
+          <p>
+            <span class="pacifico">Derniermarché</span><span class="pacifico bleuFonce">.com</span> ne saurait se porter garant d'éventuels soucis rencontrés suite à la consommation de ces produits.
+          </p>
+        </div>
+      </div>
+      <div class="aProposDiv">
+        <h1>Et puis il y a des promotions</h1>
+        <p>
+          Cette plateforme offre également la possibilité de profiter des promotions courantes dans certains magasins. N'hésitez pas à donner votre avis sur la fiabilité des informations présentes sur le site, via l'onglet à icône "stylo" que vous trouverez sur la page <span class="pacifico">Offres</span> de la surface visitée. Les informations que vous nous communiquerez resteront confidentielles. Elles participeront à l'amélioration de la qualité du service.
+        </p>
+      </div>
+        <p class="copyright">
+          Copyright &copy; 2021 <span class="pacifico">Derniermarché</span><span class="pacifico bleuFonce">.com</span>.
+        </p>
+    </div>
+  </div>  
+</template>
+
+<template name="tmplteNavigationAPropos">
+  <nav id="navigationAPropos" class="navbar navbar-inverse navbar-fixed-top navigation">
+    <div id="idNavigation" class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          <span class="pacifico fairRed">Derniermarché</span><span class="pacifico bleuFonce">.com</span>
+        </a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a class="text-center bold" href="/">Accueil</a></li>
+          <li><a class="text-center bold" href="/offres">Les bonnes offres</a></li>
+          <li><a class="text-center bold active" href="#">A propos</a></li>
+          <li><a class="text-center bold" href="/contact">Nous contacter</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template> 

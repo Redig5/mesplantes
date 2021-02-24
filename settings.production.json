@@ -1,0 +1,11 @@
+{ 
+	"galaxy.meteor.com": {
+     "env": {
+       "MONGO_URL": "mongodb://derniermarche-2758:k7LVFceXYv6AcKuuOuae@241aa7e6-0dc4-4cec-bde9-5b5acef9c1a0.derniermarche-2758.mongo.dbs.scalingo.com:34323/derniermarche-2758?replicaSet=derniermarche-2758-rs0&ssl=true",
+       "ROOT_URL": "https://derniermarche.osc-fr1.scalingo.io"
+     }
+   },  
+   "public": {
+    	"cloudinary": {"cloud_name": "dmarchedotcom", "upload_preset": "av1blbpc"}
+   }
+}
