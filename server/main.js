@@ -17,11 +17,19 @@ Meteor.startup(function () {
     port: 587
   }
   */
+  /*
   smtp = {
     username: 'derniermarche.com@gmail.com',
     password: 'dm.com2020',
     server:   'smtp.gmail.com',
     port: 465
+  }
+  */
+  smtp = {
+    username: '3c912d99f95d8edd646030e884e1d2f7',
+    password: 'e564905c1c850e00bdca338b0ca0e9fe',
+    server:   'in-v3.mailjet.com',
+    port: 587
   }
   process.env.MAIL_URL = 'smtps://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
 });

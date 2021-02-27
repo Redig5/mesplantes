@@ -23,10 +23,10 @@ hot-module-replacement@0.2.0  # Update client in development without reloading t
 #react-meteor-data       # React higher-order component for reactively tracking Meteor data
 
 blaze-html-templates
+iron:router
 twbs:bootstrap
 peppelg:bootstrap-3-modal
 jquery
-iron:router
 session
 ostrio:files
 less

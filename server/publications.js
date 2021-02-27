@@ -28,7 +28,9 @@ Meteor.publish('lesEspacesSub', function(vil, qrtier){
 			siteDateCreation : false,
 			siteLesNotes : false,
 			siteMail : false,
-			siteVotants : false }
+			siteVotants : false,
+			siteDateDeBlocked : false,
+			siteDateBlocked : false }
 	});
 });
 
@@ -44,7 +46,9 @@ Meteor.publish('leSiteSub', function(id){
 			siteDateCreation : false,
 			siteLesNotes : false,
 			siteMail : false,
-			siteVotants : false }
+			siteVotants : false,
+			siteDateDeBlocked : false,
+			siteDateBlocked : false }
 		});
 });
 

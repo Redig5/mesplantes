@@ -73,8 +73,8 @@
           </form>
           <div id="idConfirmModifNote" class="confirmModifNote non">
             Souhaitez-vous modifier votre dernière note ?
-             <button type="button" id="idConfirmModifOui" class="confirm">OUI</button>
-             <button type="button" id="idConfirmModifNon" class="confirm">NON</button>
+            <button type="button" id="idConfirmModifOui" class="confirm">OUI</button>
+            <button type="button" id="idConfirmModifNon" class="confirm">NON</button>
           </div> 
           <div id="idAlertConfirm" class="alert alert-success non" role="alert">
             <span class="pacifico">Derniermarché.com</span> vous remercie pour votre note
@@ -92,7 +92,18 @@
             <div class="lesOffresItem">
               <p id="idPoussette" class="poussette"></p>
               <h1 class="lesOffresTitres white">- Les derniers marchés -</h1>
-              <p class="petiteIntro petit">"Je vends je perds"</p>
+              <p class="petiteIntro petit">
+                <div class="stylePetiteIntro spiOne"></div>
+                <div class="stylePetiteIntro spiTwo"></div>
+                <div class="stylePetiteIntro spiThree"></div>
+                <div class="stylePetiteIntro spiFour"></div>
+                <div class="stylePetiteIntro spiFive"></div>
+                <div class="stylePetiteIntro spiSix"></div>
+                "Je vends je perds"
+                <div class="slogan">
+                  Viens faire ton choix. Ici on ne jette rien, on liquide --
+                </div>
+              </p>
             </div>
             <div class="lesOffres">
               {{#if dMOffresEpicerieSalee}}
@@ -389,6 +400,9 @@
                   <h1>- Le coin des promos -</h1>
                   <p class="petiteIntro petit">
                     Repère des "prix cassés"
+                    <div class="slogan">
+                      Ici, les réductions du moment dans notre magasin --
+                    </div>
                   </p>
                 </div>  
               </div>

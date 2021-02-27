@@ -127,7 +127,11 @@ Template.tmplteOffres.events({
 		else {
 			$('#idChoixSurface').removeClass('choixNon');
 			$('#idChoixSurface').addClass('choixOui');
-			$('#idValidationRecherche').addClass('choixNon');
+			if ($('#idSurface').val() != '--' && $('#idSurface').val() != '') {
+				$('#idValidationRecherche').removeClass('choixNon');
+				$('#idValidationRecherche').addClass('choixOui');
+			}
+			else { $('#idValidationRecherche').addClass('choixNon'); }
 		}
 		const hauteurDevice = window.innerHeight;
 		if (hauteurDevice < 560) {
@@ -4869,5 +4873,5 @@ Template.carousel.onCreated(function(){
 	this.subscribe('meilleuresPromosSub');
 });
 Template.carousel.helpers({
-	lesMeilleuresPromos : function(){ return Promotions.find({}, {sort : {promoRemise : -1}}); }
+	lesMeilleuresPromos : function(){ return Promotions.find(); }
 });
