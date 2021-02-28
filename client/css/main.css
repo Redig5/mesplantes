@@ -1,3 +1,4 @@
+	html, body { height: 100vh; }
 	body {
 	  padding: 61px 10px 0;
 	  font-family: "Josefin Sans", calibri, lato, sans-serif;
@@ -86,7 +87,7 @@
 
 	/*--------------- ELEMENTS INTRO -------------*/
 	/*--------------- ELEMENTS INTRO -------------*/
-	.pacifico { font-family: pacifico; font-size: 16px; }
+	.pacifico { font-family: pacifico; font-size: 15px; }
 	.pacifico24 { font-family: pacifico; font-size: 20px; }
 	.courierNew32 { font-family: "courier New"; font-size: 32px; }
 
@@ -404,9 +405,9 @@
 		padding: 21px;
 		color: rgba(33,33,33,0.87);   
 		background-color: #df6231;
-		z-index: 2; 
-		border-bottom: 1px solid rgba(102,0,0,.33); 
-		box-shadow: 0 0 8px 5px rgba(33,33,33,.33);
+		z-index: 12; 
+		border-bottom: 1px solid rgba(102,0,0,.23); 
+		box-shadow: 0 0 8px 3px rgba(33,33,33,.33);
 	}
 	.titreSurMobile { 
 		position: fixed; 
@@ -417,7 +418,7 @@
 		background-color: #ea6735; 
 	}		
 		#idOffres .titreSurMobile {
-			top: 24vh;
+			top: 23vh;
 			margin-top: 3px;
 			margin-bottom: 0;
 			padding-top: 6.9vh;
@@ -440,7 +441,7 @@
 	.lesSitesDispos { display: none; }
 	.ligneSeparation { 
 		position: fixed;
-		top: 41.7vh;
+		top: 40vh;
 		width: 90px; 
 		height: 5px;
 		background-color: rgba(33,33,33,0.6);
@@ -761,7 +762,7 @@
 		}
 	.lesDerniersMarches h2, .lesPromotions h2 {
 		position: relative; 
-		margin-top: 10.5vh;  
+		margin-top: 13vh;  
 		padding-left: 24vw;   
 		padding-bottom: 10px; 
 		font-size: 1.5rem;
@@ -804,19 +805,24 @@
 		text-align: right;
 	}
 
+	.dmLesOffresTitresDiv { 
+		margin-left: -2.5vw;
+		border-left: 6px solid #f7e9b4;
+	}
 	.lesDerniersMarches .lesOffresTitres,
 	.lesPromotions .lesOffresTitres { padding-top: 0; padding-left: 12vw; }
 		.lesDerniersMarches .lesOffresTitres {
 			height: 54vh;
+			margin-left: 2vw;
 			margin-right: 5px;
-			padding: 20vh 30px 20px 25px;
+			padding: 18vh 40px 20px 35px;
 			background-color: #ee9270;
 			border-top: 20px solid #ee9270;
 			border-right: 6px solid #fff;
-			border-left: 1px solid rgba(33,33,33,.15);
-			box-shadow: 0 0 8px 5px rgba(33,33,33,.33);
+			border-left: 6px solid rgba(255,255,255,.95);
+			box-shadow: 0 0 5px 2px rgba(33,33,33,.33);
 			font-weight: bold;
-			font-size: 6.5vh;
+			font-size: 6vh;
 			text-transform: uppercase;
 		}
 
@@ -829,8 +835,8 @@
 		padding: 4vh 5vw;
 		background-color: #fff;
 		border-bottom-right-radius: 50%;
-		border-left: 1px solid rgba(33,33,33,.7);
-		box-shadow: 0 0 8px 2px rgba(33,33,33,.23);
+		border-left: 1px solid rgba(33,33,33,.33);
+		box-shadow: 2px 2px 8px 2px rgba(33,33,33,.33);
 		opacity: 1;
 		z-index: 10;
 	}
@@ -841,7 +847,7 @@
 	}
 		.spiOne {
 			top: 8px;
-			width: 70px;
+			width: 100px;
 			background-color: #008100;
 		}
 		.spiTwo {
@@ -850,21 +856,25 @@
 			background-color: #8a1e4b;
 		}
 		.spiThree {
+			display: none;
 			top: 29px;
 			width: 25px;
 			background-color: #005992;
 		}
 		.spiFour {
+			display: none;
 			top: 39px;
 			width: 17px;
 			background-color: #e46f06;
 		}
 		.spiFive {
+			display: none;
 			top: 49px;
 			width: 10px;
 			background-color: #798200;
 		}
 		.spiSix {
+			display: none;
 			top: 59px;
 			width: 5px;
 			background-color: #a94a26;
@@ -898,7 +908,7 @@
 	.lesPromotions h2 { color: #433B08; }
 	.lesOffresTitresPromotions h1 {
 		font-weight: bold;
-		font-size: 6.5vh;
+		font-size: 6vh;
 		text-transform: uppercase;
 	}
 	.lesOffresTitresPromotions .petiteIntro {
@@ -1261,37 +1271,21 @@
 	.qteOffre { font-size: 15px; }
 	.lesDerniersMarches, .lesPromotions { padding-top: 70px; }
 	.lesOffresTitres { margin-right: 0; }
+	.dmLesOffresTitresDiv { border-width: 15px; }
 	.lesDerniersMarches .lesOffresTitres { 
+		margin-left: 1.3vw;
 		padding-top: 30vh; 
 		padding-right: 100px; 
 		padding-bottom: 10vh;
 		font-size: 6vh;
 	} 
 	.stylePetiteIntro { left: 25px; }
-	.spiOne {
-		top: 25px;
-		width: 100px;
-	}
-	.spiTwo {
-		top: 36px;
-		width: 62px;
-	}
-	.spiThree {
-		top: 46px;
-		width: 40px;
-	}
-	.spiFour {
-		top: 56px;
-		width: 30px;
-	}
-	.spiFive {
-		top: 66px;
-		width: 22px;
-	}
-	.spiSix {
-		top: 76px;
-		width: 15px;
-	}
+	.spiOne { top: 25px; width: 100px; }
+	.spiTwo { top: 36px; width: 62px; }
+	.spiThree { display: block; top: 46px; width: 40px; }
+	.spiFour { display: block; top: 56px; width: 30px; }
+	.spiFive { display: block; top: 66px; width: 22px; }
+	.spiSix { display: block; top: 76px; width: 15px; }
 	.lesPromotions .lesOffresTitres { padding-top: 35vh; }
 	.lesPromotions .lesOffresItem { margin-left: 3vw; }
 	.lesPromotions .lesOffresTitres { padding-top: 0; }
@@ -2030,18 +2024,19 @@
 
 	.lesOffresItem:last-of-type { margin-bottom: 5px; } 
 	.illusion { width: 31vw; height: 37vw; } 
+	.dmLesOffresTitresDiv { margin-left: 0; border: none; }
 	.lesOffresTitres {
 		margin: 0;
 		padding-bottom: 0;
 		font-size: 34px;
 		text-align: center;
 	}
-	.lesPromotions .lesOffresTitres {
-		margin-top: -18vh;
-		margin-left: -5px;
-		padding-top: 0; 
-		background-color: #ffe1ac;
-	}
+		.lesPromotions .lesOffresTitres {
+			margin-top: -18vh;
+			margin-left: -5px;
+			padding-top: 0; 
+			background-color: #ffe1ac;
+		}
 		.lesDerniersMarches .lesOffresTitres {
 			height: 100vh;
 			width: 64vw; 
