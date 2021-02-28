@@ -87,7 +87,7 @@
 
 	/*--------------- ELEMENTS INTRO -------------*/
 	/*--------------- ELEMENTS INTRO -------------*/
-	.pacifico { font-family: pacifico; font-size: 15px; }
+	.pacifico { font-family: pacifico; font-size: 16px; }
 	.pacifico24 { font-family: pacifico; font-size: 20px; }
 	.courierNew32 { font-family: "courier New"; font-size: 32px; }
 
@@ -714,7 +714,7 @@
 	/*--------------- PROMOTIONS -------------*/
 	#idContainerOffresSites { margin: 0 -3px 0 -4px; padding: 0; }
 	#idOffresSites {
-		height: 90vh; 
+		height: 100vh; 
 	    align-items: center;    
 	    justify-content: space-between;   
 	    overflow-x: hidden;
@@ -762,7 +762,7 @@
 		}
 	.lesDerniersMarches h2, .lesPromotions h2 {
 		position: relative; 
-		margin-top: 13vh;  
+		margin-top: 16vh;  
 		padding-left: 24vw;   
 		padding-bottom: 10px; 
 		font-size: 1.5rem;
@@ -815,7 +815,7 @@
 			height: 54vh;
 			margin-left: 2vw;
 			margin-right: 5px;
-			padding: 18vh 40px 20px 35px;
+			padding: 18vh 40px 20px 30px;
 			background-color: #ee9270;
 			border-top: 20px solid #ee9270;
 			border-right: 6px solid #fff;
