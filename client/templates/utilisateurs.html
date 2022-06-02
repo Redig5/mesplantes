@@ -1,0 +1,210 @@
+<template name="tmpltePageUsers">
+  {{> tmplteNavigationUsers }}
+  <div class="container containerUsers" id="idContainerUsers">
+    {{> tmplteUsers }}
+    <div class="bandeauDuBas"></div>
+    <div class="siteCache" id="idSiteCache"></div>
+  </div>
+</template>
+
+<template name="tmplteUsers">
+  <div class="accueil starter-template" id="idUsers">
+    {{#if currentUser}}
+      {{#if $eq currentUser.profile "userApp"}}
+      <p class="intro text-center text-md-left majuscule" id="idLesUtilisateurs">Les utilisateurs</p>
+      {{/if}}
+    {{/if}}
+    <div class="leConteneur">
+      {{#if currentUser}}
+        {{#if $eq currentUser.profile "userApp"}}
+          <div id="login-buttons" class="login-buttons-dropdown-align-">  
+            <div class='login-link-and-dropdown-list'>
+              <a class='login-link-text' id='login-name-link'>
+                {{#each email in currentUser.emails}}
+                  {{ email.address }} ▾
+                {{/each}}
+              </a>
+            </div>
+          </div>
+          <h1 class="titreSurMobile">Utilisateurs du site</h1>
+          <p class="ligneSeparation ligneSeparationUsers"></p>
+          <div class="lesUsers">
+            {{#if lAutres}}
+              <p>LES SUSPECTS</p>
+              {{#each lAutres}}
+                <div class="panelChoixUtilisateur lesAutres">
+                  <div class="panel panel-default js-siteUtilisateur" id="{{ _id }}">
+                    <div class="panel-body">
+                      <span class="glyphicon glyphicon-chevron-right pull-right" id="{{ _id }}"></span>
+                        {{#each email in emails}}
+                          {{ email.address }}
+                        {{/each}}
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+              <p>-------------------</p>
+            {{/if}}
+            {{#if lUtilisateurs}}
+              <p>LES AGENTS</p>
+              {{#each lUtilisateurs}}
+                <div class="panelChoixUtilisateur lesUtilisateurs">
+                  <div class="panel panel-default js-siteUtilisateur" id="{{ _id }}">
+                    <div class="panel-body">
+                      <span class="glyphicon glyphicon-chevron-right pull-right" id="{{ _id }}"></span>
+                        {{#each email in emails}}
+                          {{ email.address }}
+                        {{/each}}
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+              <p>-------------------</p>
+            {{/if}}
+          </div>
+
+        {{ else }}
+          <div id="login-buttons" class="login-buttons-dropdown-align-">
+            <div class="login-link-and-dropdown-list login-form-sign-in">
+              <a class="login-link-text" id="login-sign-in-link">Sign in ▾</a>
+            </div>
+          </div>
+          <div class="seConnecter"><span>Se</span> connecter</div>
+          <div id='idErrLogin' class='error errLogin'>Vous n'êtes pas autorisé.e.s</div>
+        {{ /if }}
+
+      {{ else }}
+        <div id="login-buttons" class="login-buttons-dropdown-align-">
+          <div class="login-link-and-dropdown-list login-form-sign-in">
+            <a class="login-link-text" id="login-sign-in-link">Sign in ▾</a>
+          </div>
+        </div>
+        <div class="seConnecter"><span>Se</span> connecter</div>
+      {{ /if }} 
+    </div> 
+  </div>   
+</template>
+
+<template name="tmplteModalForgotPassword">
+  <div class="modal fade" tabindex="-1" role="dialog" id="idModalForgotPassword">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h4>FERMER</h4>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="suppUser" id="idSuppUserDiv">
+            <div class="form-group" id="idSuppUtilisateur">
+              <button type="button" class="btn btn-primary majuscule">
+                Supprimer l'utilisateur
+              </button>
+            </div>
+            <div class="form-group non" id="idSuppUtilisateurDiv">
+              <p>Supprimer l'utilisateur ?</p>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary majuscule" id="idSuppUser">Supprimer</button>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-default majuscule" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bloqUser" id="idBloqUserDiv">
+            <div class="form-group" id="idBloqUtilisateur">
+              <button type="button" class="btn btn-secondary majuscule">
+                Bloquer/Débloquer l'utilisateur
+              </button>
+            </div>
+            <div class="form-group non" id="idBloqUtilisateurDiv">
+              <p>Bloquer/Débloquer l'utilisateur ?</p>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary majuscule" id="idBloqUser">Bloquer/Débloquer</button>
+                <button type="submit" class="btn btn-primary majuscule non" id="idBloq">Bloquer</button>
+                <button type="submit" class="btn btn-primary majuscule non" id="idDebloq">Débloquer</button>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-default majuscule" data-dismiss="modal">Annuler</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group non" id="idErrorForgotPwd">
+            Opération non prise en compte. Prière de réessayer.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tmplteModalNouvelUtilisateur">
+  <div class="modal fade" tabindex="-1" role="dialog" id="idModalNouvelUtilisateur">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h4>FERMER</h4>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <p class="bold">Nouvel agent :</p>
+          </div>
+          <div class="form-group">
+            <input type="email" name="mailNewUser" class="form-control" id="idMailNewUser" maxlength="60" placeholder="Mail de l'agent" required>
+            <p class="fairRed error non">Entrer une adresse mail</p>
+          </div>
+          <div class="form-group error non" id="idErrorMailNewUser">
+            Prière de vérifier l'adresse mail (Déjà existant ?)
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary majuscule" id="idSubmitNewUser">Créer</button>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary majuscule non" id="idSubmitNewUserConfirm">Confirmer création</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-default majuscule" data-dismiss="modal">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tmplteNavigationUsers">
+  <nav id="navigationUsers" class="navbar navbar-inverse navbar-fixed-top navigation">
+    <div id="idNavigationUsers" class="container authentification">
+      <div class="navbar-header">
+        {{#if currentUser}}
+          {{#if $eq currentUser.profile "userApp"}}
+          <button type="button" class="navbar-toggle collapsed btnCreation" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          {{/if}}
+        {{ /if }}
+        <a class="navbar-brand" href="/">
+          <span class="pacifico fairRed">Derniermarché</span><span class="pacifico bleuFonce">.com</span>
+        </a>
+      </div>
+      {{#if currentUser}}
+        {{#if $eq currentUser.profile "userApp"}}
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="text-center bold" href="/authentification/espaces">Espaces disponibles</a></li>
+            <li><a class="text-center bold" href="/authentification/sites">Sites disponibles</a></li>
+            <li><a class="text-center bold" href="/authentification/creationespace">Création d'un espace</a></li>
+            <li><a class="text-center bold" href="/authentification/creationsite">Création d'un site</a></li>
+            <li><a class="text-center bold active" href="#">Les utilisateurs</a></li>
+          </ul>
+        </div>
+        {{/if}}
+      {{ /if }}
+    </div>
+  </nav>
+</template>

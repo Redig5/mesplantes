@@ -1,0 +1,538 @@
+<template name="tmpltePageMySpace">
+  {{> tmplteNavigationMySpace }}
+  <div class="container containerMySpace" id="idContainerMySpace">
+    {{> tmplteMySpace }}
+    <div class="bandeauDuBas"></div>
+    <div class="siteCache" id="idSiteCache"></div>
+   </div>
+</template>
+
+<template name="tmplteMySpace">
+  <div class="accueil starter-template" id="idMySpace">
+    <p class="intro text-center text-md-left majuscule">Ma surface</p>
+    {{#if currentUser}}
+      {{#if $eq currentUser.profile "client"}}
+        <div id="login-buttons" class="login-buttons-dropdown-align-">  
+          <div class='login-link-and-dropdown-list'>
+            <a class='login-link-text' id='login-name-link'>
+              {{#each email in currentUser.emails}}
+                {{ email.address }} ▾
+              {{/each}}
+            </a>
+          </div>
+        </div>
+        <p class="intro text-center text-md-left majuscule" id="idIntroMySpace">
+          {{> tmplteChaqueSiteMySpace uSite = uSite }}
+        </p> 
+        <div class="leConteneur">
+          <div class="divOffresMySpace">
+            {{#let qteDM=dMOffres}}
+              {{#if qteDM.qteDMOBool }}
+                <div class="lesDerniersMarches">      
+                  <h1 class="lesOffresTitres white">- Mes derniers marchés -</h1>
+                  <div class="lesOffres">
+                    {{#if dMOffresEpicerieSalee}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Epicerie Salée</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMESal }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMESalee" class="carouselOffres">
+                          {{#each dMESalee in dMOffresEpicerieSalee}} 
+                            {{> tmplteChaquePromo promo = dMESalee }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMESaleePrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMESaleeNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresEpicerieSucree}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Epicerie Sucrée</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMESuc }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMESucree" class="carouselOffres">      
+                          {{#each dMESucree in dMOffresEpicerieSucree}}
+                            {{> tmplteChaquePromo promo = dMESucree }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMESucreePrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMESucreeNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresProduitsFrais}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Produits Frais</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMPF }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMPFrais" class="carouselOffres">
+                          {{#each dMPFrais in dMOffresProduitsFrais}}
+                            {{> tmplteChaquePromo promo = dMPFrais }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMPFraisPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMPFraisNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresFruitsLegumes}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Fruits & Légumes</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMFL }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMFLegumes" class="carouselOffres">
+                          {{#each dMFLegumes in dMOffresFruitsLegumes}}
+                            {{> tmplteChaquePromo promo = dMFLegumes }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMFLegumesPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMFLegumesNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresBoucheriePoissVol}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Boucherie, Poissonnerie, Volaille</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMBPV }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMBPoissVol" class="carouselOffres">
+                          {{#each dMBPoissVol in dMOffresBoucheriePoissVol}}
+                            {{> tmplteChaquePromo promo = dMBPoissVol }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMBPoissVolPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMBPoissVolNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresBoissonVinLiq}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Boisson, Vins, Liqueurs</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMBVL }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMBVinLiq" class="carouselOffres">
+                          {{#each dMBVinLiq in dMOffresBoissonVinLiq}}
+                            {{> tmplteChaquePromo promo = dMBVinLiq }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMBVinLiqPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMBVinLiqNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresBoulangeriePatisserie}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Boulangerie & Patisserie</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMBP }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMBPatisserie" class="carouselOffres">  
+                          {{#each dMBPatisserie in dMOffresBoulangeriePatisserie}}
+                            {{> tmplteChaquePromo promo = dMBPatisserie }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMBPatisseriePrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMBPatisserieNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if dMOffresFastFood}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Fast Food</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteDM.qte.dMFF }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselDMFFood" class="carouselOffres">
+                          {{#each dMFFood in dMOffresFastFood}}
+                            {{> tmplteChaquePromo promo = dMFFood }}
+                          {{/each}}
+                        </div>
+                        <div id="idDMFFoodPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idDMFFoodNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                  </div>
+                </div>
+              {{/if}}
+            {{/let}}
+            {{#let qteP=pOffres}}
+              {{#if qteP.qtePOBool}}
+                <div class="lesPromotions">
+                  <div class="lesOffresTitres">
+                    <div class="lesOffresTitresPromotions white">
+                      <h1>- Mon coin promos -</h1>
+                    </div>  
+                  </div>
+                  <div class="lesOffres">
+                    {{#if pOffresEpicerieSalee}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Epicerie Salée</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pESal }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPESalee" class="carouselOffres">
+                          {{#each pESalee in pOffresEpicerieSalee}}
+                            {{> tmplteChaquePromo promo = pESalee }}
+                          {{/each}}
+                        </div>
+                        <div id="idPESaleePrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPESaleeNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresEpicerieSucree}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Epicerie Sucrée</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pESuc }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPESucree" class="carouselOffres">
+                          {{#each pESucree in pOffresEpicerieSucree}}
+                            {{> tmplteChaquePromo promo = pESucree }}
+                          {{/each}}
+                        </div>
+                        <div id="idPESucreePrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPESucreeNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresProduitsFrais}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Produits Frais</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pPF }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPPFrais" class="carouselOffres">
+                          {{#each pPFrais in pOffresProduitsFrais}}
+                            {{> tmplteChaquePromo promo = pPFrais }}
+                          {{/each}}
+                        </div>
+                        <div id="idPPFraisPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPPFraisNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresFruitsLegumes}}
+                      <p class="separationH2Haut"></p>
+                      <h2 class="white">Rayon Fruits & Légumes</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pFL }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPFLegumes" class="carouselOffres">
+                          {{#each pFLegumes in pOffresFruitsLegumes}}
+                            {{> tmplteChaquePromo promo = pFLegumes }}
+                          {{/each}}
+                        </div>
+                        <div id="idPFLegumesPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPFLegumesNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresBoucheriePoissVol}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Boucherie, Poissonnerie, Volaille</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pBPV }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPBPoissVol" class="carouselOffres">
+                          {{#each pBPoissVol in pOffresBoucheriePoissVol}}
+                            {{> tmplteChaquePromo promo = pBPoissVol }}
+                          {{/each}}
+                        </div>
+                        <div id="idPBPoissVolPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPBPoissVolNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresBoissonVinLiq}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Boisson, Vins, Liqueurs</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pBVL }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPBVinLiq" class="carouselOffres">
+                          {{#each pBVinLiq in pOffresBoissonVinLiq}}
+                            {{> tmplteChaquePromo promo = pBVinLiq }}
+                          {{/each}}
+                        </div>
+                        <div id="idPBVinLiqPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPBVinLiqNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresBoulangeriePatisserie}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Boulangerie & Patisserie</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pBP }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPBPatisserie" class="carouselOffres">
+                          {{#each pBPatisserie in pOffresBoulangeriePatisserie}}
+                            {{> tmplteChaquePromo promo = pBPatisserie }}
+                          {{/each}}
+                        </div>
+                        <div id="idPBPatisseriePrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPBPatisserieNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresFastFood}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Fast Food</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pFF }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPFFood" class="carouselOffres">
+                          {{#each pFFood in pOffresFastFood}}
+                            {{> tmplteChaquePromo promo = pFFood }}
+                          {{/each}}
+                        </div>
+                        <div id="idPFFoodPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPFFoodNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                    {{#if pOffresBazar}}
+                      <p class="separationH2Haut"></p>
+                      <h2>Rayon Bazar</h2>
+                      <p class="separationH2"></p>
+                      <p class="qteOffre">{{ qteP.qte.pB }} produit(s)</p>
+                      <div class="containCarouselOffres">
+                        <div id="idCarouselPBazar" class="carouselOffres">
+                          {{#each pBazar in pOffresBazar}}
+                            {{> tmplteChaquePromo promo = pBazar }}
+                          {{/each}}
+                        </div>
+                        <div id="idPBazarPrev" class="myCarousel__prev myCarousel__prev-hidden"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                        <div id="idPBazarNext" class="myCarousel__next myCarousel__next-hidden"><span class="glyphicon glyphicon-chevron-right"></span></div>
+                      </div>
+                    {{/if}}
+                  </div>
+                </div>
+              {{/if}}
+            {{/let}}  
+          </div>
+        </div>
+      {{ else }}
+        <div id="login-buttons" class="login-buttons-dropdown-align-">
+          <div class="login-link-and-dropdown-list login-form-sign-in">
+            <a class="login-link-text" id="login-sign-in-link">Sign in ▾</a>
+          </div>
+        </div>
+        <div class="seConnecter"><span>Se</span> connecter</div>
+        <div id='idErrLogin' class='error errLogin'>Vous n'êtes pas autorisé.e.s</div>
+      {{ /if }}
+    {{ else }}
+
+      <div id="login-buttons" class="login-buttons-dropdown-align-">
+        <div class="login-link-and-dropdown-list login-form-sign-in">
+          <a class="login-link-text" id="login-sign-in-link">Sign in ▾</a>
+        </div>
+      </div>     
+      <div class="seConnecter"><span>Se</span> connecter</div>
+    {{ /if }}        
+  </div>  
+</template>
+
+<template name="tmplteChaqueSiteMySpace">
+  <div class="introInfos infosSite js-modif-site">
+    {{ uSite.siteEspace }} . <span class="smallCaption">{{ uSite.siteQuartier }}</span>
+    <p class="modifInfosSite">Gestion des promotions</p>
+  </div>
+</template>
+
+<template name="tmplteModalModifSiteMySpace">
+  <div class="modal fade" tabindex="-1" role="dialog" id="idModalModifSite">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h4>FERMER</h4>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-lg-10 notificationExistNON" id="idNotificationExist">
+            <p>TRAITEMENT IMPOSSIBLE : site non existant</p>
+          </div>
+          <div class="col-lg-10 confirmationNON" id="idConfirmation">
+            <button type="button" class="btn btn-secondary non annulModif" id="idConfirmAnnul">ANNULER</button>
+
+            <div class="promo non" id="idConfirmPromotion">           
+              <div class="promoUploadTof">
+                <label for="fileInput" class="col-lg-4 control-label">Image du produit : </label>  
+                {{> uploadForm }}
+              </div>
+              <div>
+                <form class="js-ajout-promotion">
+                  <div id="idTypePromo" class="non">
+                    <div class="form-group">
+                      <label for="idSelectTypePromo" class="col-lg-4 control-label">Type de promo : </label>
+                      <div class="col-lg-8">
+                        <select name="selectTypePromo" class="js-choix-typePromo form-control" id="idSelectTypePromo">
+                          <option value="--">--</option>
+                          <option value="dernierMarche">Dernier marché</option>
+                          <option value="promotion">Simple promotion</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="idRayonPromo" class="non">
+                    <div class="form-group">
+                      <label for="idSelectRayonPromo" class="col-lg-4 control-label">Rayon de la promo : </label>
+                      <div class="col-lg-6">
+                        <select name="selectRayonPromo" class="js-choix-rayonPromo form-control" id="idSelectRayonPromo">
+                          <option value="--">--</option>
+                          <option value="epicerieSalee">Épicerie salée</option>
+                          <option value="epicerieSucree">Épicerie sucrée</option>
+                          <option value="produitsFrais">Produits frais</option>
+                          <option value="fruitsLegumes">Fruits & légumes</option>
+                          <option value="bouchPoissVol">Boucherie, poissonnerie, volaille</option>
+                          <option value="boissVinLiq">Boissons, vins, liqueurs</option>
+                          <option value="boulPatisserie">Boulangerie, patisserie</option>
+                          <option value="fastFood">Fast food</option>
+                          <option id="idSelectRayonPromoBazar" value="bazar">Bazar</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="idDefinitionPromo" class="non">
+                    <div class="form-group">
+                      <div class="col-lg-10">
+                        <input type="text" name="nomProduit" class="form-control majuscule" 
+                        id="idNomProduit" placeholder="Désignation du produit" autocomplete="true" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-lg-10">
+                        <input type="number" name="prixProduit" class="form-control majuscule" 
+                        id="idPrixProduit" max="1000000" placeholder="Prix du produit (fcfa)" autocomplete="true" required>
+                      </div>
+                    </div>
+                    <!-- <div class="form-group">
+                      <div class="col-lg-10">
+                        <input type="text" name="quantiteProduit" class="form-control majuscule" id="idQuantiteProduit" maxlength="40" placeholder="Quantité du produit" autocomplete="true" required>
+                      </div>
+                    </div> -->
+                    <!-- <div class="form-group">
+                      <div class="col-lg-10">
+                        <label for="idExpProduit" class="col-lg-4 control-label">Expiration produit : </label>
+                        <input type="date" name="expirationProduit" class="form-control majuscule" id="idExpProduit" placeholder="Expiration produit (jj/mm/aaaa)" required>
+                      </div>
+                    </div> -->
+                    <div class="form-group">
+                      <div class="col-lg-10">
+                        <input type="number" name="remisePromotion" class="form-control majuscule" id="idRemisePromotion" max="100" placeholder="Remise (%)" autocomplete="true" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-lg-10">
+                        <label for="idExpPromotion" class="col-lg-4 control-label">Promotion valable jusqu'au : </label>
+                        <input type="date" name="validitePromotion" class="form-control majuscule" id="idExpPromotion" placeholder="Validité promotion (jj/mm/aaaa)" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-lg-10">
+                        <textarea name="detailPromotion" class="form-control" 
+                        id="idDetailPromotion" maxlength="60" placeholder="Détail de la promotion" rows="3" required></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="idValidationPromo" class="row non">
+                    <div class="form-group">
+                      <div class="col-lg-10">
+                        <button type="submit" class="btn btn-success majuscule" id="idValiderPromotion">VALIDER</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="infosIntroSite">
+            <div class="form-group moyen">
+              Site bloqué ? <span class="bold">{{ uSite.siteBlocked }}</span>
+            </div>
+            <div class="form-group moyen">
+              Note du site : <span class="bold orange">{{ uSite.siteNote }}/5 --- {{ uSite.siteLesNotes.length }} votant(s)</span>
+            </div>
+          </div>
+          <form class="js-modif-site form-horizontal col-lg-12" id="idModifSite">
+            <p id="idInfosDuSite" class="js-modifInfos-site soft bold">
+              Coordonnées du site
+              <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </p>
+            <div class="infosDuSite">  
+              <div class="form-group">
+                <div class="col-lg-10 form-control majuscule disabled">{{ uSite.siteQuartier }}</div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-10 form-control majuscule disabled">{{ uSite.siteVille }}</div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-10 form-control disabled">{{ uSite.siteContact }}</div>
+              </div>
+              {{#if uSite.siteMail}}
+                <div class="form-group">
+                  <div class="col-lg-10 form-control disabled">{{ uSite.siteMail }}</div>
+                </div>
+              {{/if}}
+              {{#if uSite.siteMailTwo}}
+                <div class="form-group">
+                  <div class="col-lg-10 form-control disabled">{{ uSite.siteMailTwo }}</div>
+                </div>
+              {{/if}}
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success majuscule js-btn-promotion" name="btnPromotion">Ajouter une promotion</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tmplteModalModifPassword">
+  <div class="modal fade" tabindex="-1" role="dialog" id="idModalModifPassword">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h4>FERMER</h4>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{> atForm state='changePwd'}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tmplteNavigationMySpace">
+  <nav id="navigationMySpace" class="navbar navbar-inverse navbar-fixed-top navigation">
+    <div id="idNavigationMySpace" class="container">
+      <div class="navbar-header">
+        {{#if currentUser}}
+          {{#if $eq currentUser.profile "client"}}
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          {{ /if }}
+        {{ /if }}
+        <a class="navbar-brand" href="/">
+          <span class="pacifico fairRed">Derniermarché</span><span class="pacifico bleuFonce">.com</span>
+        </a>
+      </div>
+      {{#if currentUser}}
+        {{#if $eq currentUser.profile "client"}}
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="text-center bold" href="/">Accueil</a></li>
+            <li><a class="text-center bold" href="/offres">Les bonnes offres</a></li>
+            <li><a class="text-center bold" href="/apropos">A propos</a></li>
+            <li><a class="text-center bold" href="/contact">Nous contacter</a></li>
+            <li><a class="text-center bold active" href="#">Mon magasin</a></li>
+          </ul>
+        </div>
+        {{ /if }}
+      {{ /if }}
+    </div>
+  </nav>
+</template>
