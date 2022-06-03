@@ -20,7 +20,7 @@ hot-module-replacement@0.2.0  # Update client in development without reloading t
 #autopublish@1.0.7             # Publish all data to the clients (for prototyping)
 #insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 #static-html             # Define static page content in .html files
-#react-meteor-data       # React higher-order component for reactively tracking Meteor data
+react-meteor-data       # React higher-order component for reactively tracking Meteor data
 
 blaze-html-templates
 iron:router
@@ -33,8 +33,18 @@ less
 arkham:stars-rating-ui
 udondan:slick
 lepozepo:cloudinary
-email
 accounts-password
 accounts-ui
+
+softwarerero:accounts-t9n
+#useraccounts:semantic-ui
+#accounts-ui-unstyled
+
+useraccounts:bootstrap
+
 check
 modules-runtime
+email
+http
+raix:handlebar-helpers
+alanning:roles
