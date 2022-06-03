@@ -2,15 +2,16 @@
 	{{> yield }}
 </template>
 
-<template name="tmplteNoExists">
-  <div class="accueil starter-template" id="idAccueil">
-    <h1>Sorry, cette page n'existe pas</h1>
+<template name="tmplteNotExists">
+  {{> tmplteNavigationAccueil }}
+  <div class="accueilNotExists starter-template" id="idAccueilNotExists">
+    <h1>Désolé, cette page n'existe pas</h1>
   </div>
 </template>
 
 <template name="tmpltePageAccueil">
 	{{> tmplteNavigationAccueil }}
-	<div class="container" id="idContainerAccueil">
+	<div class="container containerAccueil" id="idContainerAccueil">
 		{{> tmplteAccueil }}
 		<div class="bandeauDuBas"></div>
     <div class="siteCache" id="idSiteCache"></div>
@@ -41,7 +42,9 @@
     <div id="carousel" class="carousel">
       {{#each laMeilleurePromo in lesMeilleuresPromos}}
         <div class="carousel-item">
-          <img data-lazy="{{ laMeilleurePromo.produitTof }}" alt="Photo promotion" width="80vw">         
+          <div class="divImage">
+            <img data-lazy="{{ laMeilleurePromo.produitTof }}" alt="Photo promotion" width="auto">   
+          </div>      
           <div class="carousel-description">
             <p class="carousel-produit">{{ laMeilleurePromo.produitNom }}</p>
             <p class="carousel-prix ancienPrix">{{ laMeilleurePromo.produitPrix }}FCFA</p>
@@ -63,16 +66,21 @@
     			<span class="icon-bar"></span>
     			<span class="icon-bar"></span>
     		</button>
-    		<a class="navbar-brand" href="#">
+    		<a class="navbar-brand" href="/">
           <span class="pacifico fairRed">Derniermarché</span><span class="pacifico bleuFonce">.com</span>
     		</a>
   		</div>
   		<div id="navbar" class="collapse navbar-collapse">
     		<ul class="nav navbar-nav">
-    			<li><a class="text-center bold active" href="#">Accueil</a></li>
+    			<li><a class="text-center bold active" href="/">Accueil</a></li>
     			<li><a class="text-center bold" href="/offres">Les bonnes offres</a></li>
     			<li><a class="text-center bold" href="/apropos">A propos</a></li>
     			<li><a class="text-center bold" href="/contact">Nous contacter</a></li>
+          {{#if currentUser}}
+            {{#if $eq currentUser.profile "client"}}
+              <li><a class="text-center bold" href="/myspace">Mon magasin</a></li>
+            {{/if}}
+          {{/if}}
     		</ul>
   		</div>
   	</div>

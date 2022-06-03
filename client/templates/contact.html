@@ -1,6 +1,6 @@
 <template name="tmpltePageContact">
   {{> tmplteNavigationContact }}
-  <div class="container" id="idContainerContact">
+  <div class="container containerContact" id="idContainerContact">
     {{> tmplteContact }}
     <div class="bandeauDuBas"></div>
     <div class="siteCache" id="idSiteCache"></div>
@@ -15,7 +15,7 @@
       <p>
         Merci de nous envoyer un mail.<br/>
         Nous vous répondrons dans les plus brefs délais
-      </p>
+      </p>      
       <form id="idContactEmail" class="contactEmail">
         <p class="crayonContact">
           <span class="glyphicon glyphicon-pencil"></span>
@@ -36,6 +36,13 @@
           <button type="button" id="idConfirmEnvoiMailOUI" class="confirmEMail btn btn-success">CONFIRMER</button>
           <button type="button" id="idConfirmEnvoiMailNON" class="confirmEMail btn btn-danger">ANNULER</button>
         </div>
+
+        <div id="idAttenteEnvoiMail" class="attenteEnvoiMail non">
+          <p id="idAttenteOne" class="attenteMail attenteOne"></p>
+          <p id="idAttenteTwo" class="attenteMail attenteTwo"></p>
+          <p id="idAttenteThree" class="attenteMail attenteThree"></p>
+        </div>
+
         <div id="idAlertConfirmContact" class="alert alert-success non" role="alert">
           <h4 class="alert-heading">Message envoyé !</h4> 
           <h5>
@@ -70,6 +77,11 @@
           <li><a class="text-center bold" href="/offres">Les bonnes offres</a></li>
           <li><a class="text-center bold" href="/apropos">A propos</a></li>
           <li><a class="text-center bold active" href="#">Nous contacter</a></li>
+          {{#if currentUser}}
+            {{#if $eq currentUser.profile "client"}}
+              <li><a class="text-center bold" href="/myspace">Mon magasin</a></li>
+            {{/if}}
+          {{/if}}
         </ul>
       </div>
     </div>

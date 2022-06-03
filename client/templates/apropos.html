@@ -1,6 +1,6 @@
 <template name="tmpltePageAPropos">
   {{> tmplteNavigationAPropos }}
-  <div class="container" id="idContainerAPropos">
+  <div class="container containerAPropos" id="idContainerAPropos">
     {{> tmplteAPropos }}
     <div class="bandeauDuBas"></div>
     <div class="siteCache" id="idSiteCache"></div>
@@ -42,11 +42,11 @@
       <div class="aProposDiv">
         <h1>Et puis il y a des promotions</h1>
         <p>
-          Cette plateforme offre également la possibilité de profiter des promotions courantes dans certains magasins. N'hésitez pas à donner votre avis sur la fiabilité des informations présentes sur le site, via l'onglet à icône "stylo" que vous trouverez sur la page <span class="pacifico">Offres</span> de la surface visitée. Les informations que vous nous communiquerez resteront confidentielles. Elles participeront à l'amélioration de la qualité du service.
+          Cette plateforme offre également la possibilité de profiter des promotions courantes dans certains magasins. N'hésitez pas à donner votre avis sur la fiabilité des informations présentes sur la page du supermarché ou de la surface que vous visitez, via l'onglet à icône "stylo" de la page <span class="pacifico">Offres</span>. Les informations que vous nous communiquerez resteront confidentielles. Elles participeront à l'amélioration de la qualité du service.
         </p>
       </div>
         <p class="copyright">
-          Copyright &copy; 2021 <span class="pacifico">Derniermarché</span><span class="pacifico bleuFonce">.com</span>.
+          Copyright &copy; 2022 <span class="pacifico">Derniermarché</span><span class="pacifico bleuFonce">.com</span>.
         </p>
     </div>
   </div>  
@@ -72,6 +72,11 @@
           <li><a class="text-center bold" href="/offres">Les bonnes offres</a></li>
           <li><a class="text-center bold active" href="#">A propos</a></li>
           <li><a class="text-center bold" href="/contact">Nous contacter</a></li>
+          {{#if currentUser}}
+            {{#if $eq currentUser.profile "client"}}
+              <li><a class="text-center bold" href="/myspace">Mon magasin</a></li>
+            {{/if}}
+          {{/if}}
         </ul>
       </div>
     </div>
