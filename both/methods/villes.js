@@ -99,20 +99,32 @@ Meteor.methods({
 
 	suppEspVille : function(eV){	
 		const suppEspVilleSchema = new SimpleSchema({
-		  espV : Array, 
-		  'espV.$' : Object,
-		  'espV.$.vil' : { type : String, max : 30 },
-		  'espV.$.esp' : { type : String, max : 30 },
-		  'espV.$.qtier' : { type : String, max : 30 }
+		  espVE : Array,
+		  espVQ : Array,
+		  'espVE.$' : Object,
+		  'espVE.$.vil' : { type : String, max : 30 },
+		  'espVE.$.esp' : { type : String, max : 30 }, 
+		  'espVQ.$' : Object,
+		  'espVQ.$.vil' : { type : String, max : 30 },
+		  'espVQ.$.qtier' : { type : String, max : 30 },
+		  'espVQ.$.numEspVQ' : Number
 		}, {check}).newContext();
 
 		suppEspVilleSchema.validate(eV);
 
 	  	if (suppEspVilleSchema.isValid()) {
-	  		eV.espV.forEach(function(transaction){ 
+	  		eV.espVE.forEach(function(transaction){ 
 				Villes.update({ ville : transaction.vil }, { $pull: { espaces : transaction.esp }});
-				Villes.update({ ville : transaction.vil }, { $pull: { quartiers : transaction.qtier }});
 			});
+			eV.espVQ.forEach(function(transaction){ 
+				if (transaction.numEspVQ == 1) { Villes.update({ ville : transaction.vil }, { $pull: { quartiers : transaction.qtier }}); }
+			});
+			const villes = Villes.find({ $or: [ {espaces:{ $eq: [] }}, {quartiers:{ $eq : [] }}]}).fetch();
+			if (villes.length > 0) { 
+				villes.forEach(function(transaction){
+					Villes.remove({_id: transaction._id});
+				});
+			}
 		    return 'OK';
 	  	}
 	  	else { return suppEspVilleSchema.validationErrors(); }
@@ -153,13 +165,14 @@ Meteor.methods({
 		modifNomEspVilleSchema.validate(eV);
 
 		if (modifNomEspVilleSchema.isValid()) {
-		  var v = Villes.find({espaces: eV.aEsp}).fetch();
-	      v.forEach(function(transaction){ 
-      		Villes.update({_id : transaction._id}, { $pull : { espaces : eV.aEsp }}); 
-      		Villes.update({_id : transaction._id}, { $push : { espaces: eV.nEsp }});
-	      	
-	      });
-	      return 'OK';
+		    var v = Villes.find({espaces: eV.aEsp}).fetch();
+		    if (v.length > 0) {
+		        v.forEach(function(transaction){ 
+	      		    Villes.update({_id : transaction._id}, { $pull : { espaces : eV.aEsp }}); 
+	      		    Villes.update({_id : transaction._id}, { $push : { espaces: eV.nEsp }});
+		        });
+			}
+	        return 'OK';
 	    }
 	    else { return modifNomEspVilleSchema.validationErrors(); }
 	}

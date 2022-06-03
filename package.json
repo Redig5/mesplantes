@@ -1,5 +1,5 @@
 {
-  "name": "dmAppBis",
+  "name": "dmAppTer",
   "private": true,
   "scripts": {
     "start": "meteor run",
@@ -9,18 +9,17 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "meteor-node-stubs": "^1.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "simpl-schema": "^1.10.2"
+    "simpl-schema": "^1.12.2"
   },
-   "engines": {
+  "engines": {
     "node": "12.18.2",
     "npm": "6.14.5"
   },
   "meteor": {
     "testModule": "tests/main.js"
   }
-  
 }

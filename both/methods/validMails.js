@@ -18,6 +18,8 @@ Meteor.methods({
     if (majNoteSiteSchema.isValid()) {
       const si = Sites.findOne({_id : nN.id});
       if (nN.nExists == 'OUI') { nN.laN = ((si.siteNote * si.siteVotants.length) + nN.laN) / (si.siteVotants.length + 1); }
+console.log(Math.round(nN.laN, -1));
+      nN.laN = Math.round(nN.laN, -1);
       Sites.update({_id : nN.id}, { $push : { siteLesNotes : nN.laNObj }});
       Sites.update({_id : nN.id}, { $push : { siteVotants : nN.leMail }});
       Sites.update({_id : nN.id}, { $set : { siteNote : nN.laN }});
@@ -33,6 +35,8 @@ Meteor.methods({
       const found = s.siteLesNotes.find(element => element.mailClient == nN.leMail);
       const ancienneNote = found.noteClient;
       if (nN.nExists == 'OUI') { nN.laN = ((s.siteNote * s.siteVotants.length) - ancienneNote + nN.laN) / s.siteVotants.length; }
+console.log(Math.round(nN.laN, -1));
+      nN.laN = Math.round(nN.laN, -1);
       Sites.update({_id : nN.id}, { $pull: { siteLesNotes : { mailClient : nN.leMail }}});
       Sites.update({_id : nN.id}, { $push : { siteLesNotes : nN.laNObj }});
       Sites.update({_id : nN.id}, { $set : { siteNote : nN.laN }});

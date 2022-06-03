@@ -82,4 +82,23 @@ Meteor.methods({
 	  	}
 	  	else { return modifBlockEspaceSchema.validationErrors(); } 
 	},
+
+	suppUsersSitesEspace : function(s){
+	    const suppUsersSitesEspaceSchema = new SimpleSchema({
+	      	lesIdSites : Array,
+	        'lesIdSites.$' : { type : String, max : 25 }
+	    }, {check}).newContext();
+
+	    suppUsersSitesEspaceSchema.validate(s);
+	    if (suppUsersSitesEspaceSchema.isValid()) {
+	    	var leSite;
+	      	s.lesIdSites.forEach(function(transaction){ 
+	        	leSite = Sites.findOne({_id : transaction});
+	        	if (leSite.siteUser !== undefined) { Meteor.users.remove({_id : leSite.siteUser}); }
+	        	if (leSite.siteUserTwo !== undefined) { Meteor.users.remove({_id : leSite.siteUserTwo}); }
+	        });
+	        return 'OK';
+	    }
+	    else { return suppUsersSitesEspaceSchema.validationErrors(); }
+	}
 });

@@ -1,5 +1,5 @@
 import SimpleSchema from 'simpl-schema';
-import { Roles } from 'meteor/alanning:roles';
+//    import { Roles } from 'meteor/alanning:roles';
 import { Check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base'
 

@@ -1,6 +1,43 @@
 import SimpleSchema from 'simpl-schema';
+//   import { Roles } from 'meteor/alanning:roles';
+import { Check } from 'meteor/check';
+import { Accounts } from 'meteor/accounts-base'
 
 Meteor.methods({
+  ajoutUserSite : function(usr){ 
+    const ajoutUserSiteSchema = new SimpleSchema({
+      idSite : { type : String, max : 18 },
+      m : { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 }, 
+      idUser : { type : String, max : 18 },
+      placeUser : { type : String, allowedValues: ['a','b'], max : 2 }
+    }, {check}).newContext();
+
+    ajoutUserSiteSchema.validate(usr);
+    if (ajoutUserSiteSchema.isValid()) {
+      usr.placeUser == 'a' ? Sites.update({_id : usr.idSite}, { $set : {siteMail : usr.m, siteUser : usr.idUser}}) : 
+      Sites.update({_id : usr.idSite}, { $set : {siteMailTwo : usr.m, siteUserTwo : usr.idUser}});
+      return 'OK';
+    }
+    else { return ajoutUserSiteSchema.validationErrors(); } 
+  },
+
+  supprimerUserSite : function(usr){ 
+    const supprimerUserSiteSchema = new SimpleSchema({
+      idSite : { type : String, max : 18 },
+      idUser : { type : String, max : 18 },
+      placeUser : { type : String, allowedValues: ['a','b'], max : 2 }
+    }, {check}).newContext();
+
+    supprimerUserSiteSchema.validate(usr);
+    if (supprimerUserSiteSchema.isValid()) {
+      usr.placeUser == 'a' ? Sites.update({_id : usr.idSite}, { $unset : {siteMail : "", siteUser : ""}}) : 
+      Sites.update({_id : usr.idSite}, { $unset : {siteMailTwo : "", siteUserTwo : ""}});
+      Meteor.users.remove({_id : usr.idUser});
+      return 'OK';
+    }
+    else { return supprimerUserSiteSchema.validationErrors(); } 
+  },
+
 	creationSite : function(st){
     const creationSiteSchema = new SimpleSchema({
       _id : { type : String, optional : true, max : 25 },
@@ -26,6 +63,7 @@ Meteor.methods({
       siteOuvDimanche : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
       siteFermDimanche : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
       siteEmplacement : { type : String, max : 500 },
+      siteUser : { type : String, max : 18 },
       siteNote : { type : Number, min : 0, max : 5 },
       siteVotants : Array,
       'siteVotants.$': { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
@@ -35,7 +73,8 @@ Meteor.methods({
       'siteLesNotes.$.noteClient': { type : Number, min : 0, max : 0 },
       'siteLesNotes.$.dateNote': Date,
       siteDateCreation : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      siteBlocked : { type : String, allowedValues: ['OUI', 'NON'], max : 3 }
+      siteBlocked : { type : String, allowedValues: ['OUI', 'NON'], max : 3 },
+      siteInizio : { type : String, allowedValues: ['SI', 'NO'], max : 2 }
     }, {check}).newContext();
 		creationSiteSchema.validate(st);
   	if (creationSiteSchema.isValid()) {
@@ -57,7 +96,8 @@ Meteor.methods({
       'lesIdSites.$.siteQuartier' : { type : String, max : 30 }, 
       'lesIdSites.$.siteVille' : { type : String, max : 30 },
       'lesIdSites.$.siteContact' : { type : Number, min : 600000000, max : 699999999 },
-      'lesIdSites.$.siteMail' : { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
+      'lesIdSites.$.siteMail' : { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60, optional : true },
+      'lesIdSites.$.siteMailTwo' : { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60, optional : true },
       'lesIdSites.$.siteOuvFeries' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
       'lesIdSites.$.siteFermFeries' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
       'lesIdSites.$.siteOuvLundi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
@@ -83,22 +123,26 @@ Meteor.methods({
       'lesIdSites.$.sitePromos.$.typeDePromo' : { type : String, optional : true, allowedValues: ['dernierMarche', 'promotion'] },
       'lesIdSites.$.sitePromos.$.rayonDePromo' : { type : String, optional : true, allowedValues: ['epicerieSalee', 'epicerieSucree', 'produitsFrais', 'fruitsLegumes', 'bouchPoissVol', 'boissVinLiq', 'boulPatisserie', 'fastFood', 'bazar'] },
       'lesIdSites.$.sitePromos.$.produitNom' : { type : String, optional : true, max : 40 },
-      'lesIdSites.$.sitePromos.$.produitQte' : { type : String, optional : true, max : 40 },
+      //'lesIdSites.$.sitePromos.$.produitQte' : { type : String, optional : true, max : 40 },
       'lesIdSites.$.sitePromos.$.idTofPromo' : { type : String, optional : true, max : 25 },
       'lesIdSites.$.sitePromos.$.produitTof' : { type : String, optional : true, max : 130 },
       'lesIdSites.$.sitePromos.$.produitPrix' : { type : Number, optional : true, min : 0, max : 1000000 },
       'lesIdSites.$.sitePromos.$.prixPromo' : { type : Number, optional : true, min : 0, max : 1000000 },
-      'lesIdSites.$.sitePromos.$.produitExpiration' : Date,
+      // 'lesIdSites.$.sitePromos.$.produitExpiration' : Date,
+      // 'lesIdSites.$.sitePromos.$.produitExp' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'lesIdSites.$.sitePromos.$.promoRemise' : { type : Number, optional : true, min : 1, max : 100 },
       'lesIdSites.$.sitePromos.$.promoExpiration' : Date,
+      'lesIdSites.$.sitePromos.$.promoExpirationTime' : { type : Number, min : 0, max : 1000000000000000000000000000000000 },
       'lesIdSites.$.sitePromos.$.promoDateExp' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'lesIdSites.$.sitePromos.$.promoDetail' : { type : String, optional : true, max : 60 },
       'lesIdSites.$.sitePromos.$.promoDateCreation' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'lesIdSites.$.sitePromos.$.promoDateModification' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
+      'lesIdSites.$.siteUser' : { type : String, max : 18, optional : true },
+      'lesIdSites.$.siteUserTwo' : { type : String, max : 18, optional : true },
       'lesIdSites.$.siteNote' : { type : Number, min : 0, max : 5 },
-      'lesIdSites.$.siteVotants' : Array,
+      'lesIdSites.$.siteVotants' : { type : Array, optional : true },
       'lesIdSites.$.siteVotants.$': { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
-      'lesIdSites.$.siteLesNotes' : Array,
+      'lesIdSites.$.siteLesNotes' : { type : Array, optional : true },
       'lesIdSites.$.siteLesNotes.$': Object,
       'lesIdSites.$.siteLesNotes.$.mailClient': { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
       'lesIdSites.$.siteLesNotes.$.noteClient': { type : Number, min : 0, max : 5 },
@@ -106,8 +150,10 @@ Meteor.methods({
       'lesIdSites.$.siteDateCreation' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'lesIdSites.$.siteDateModification' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'lesIdSites.$.siteBlocked' : { type : String, allowedValues: ['OUI', 'NON'], max : 3 },
+      'lesIdSites.$.siteInizio' : { type : String, allowedValues: ['SI', 'NO'], max : 2 },
       'lesIdSites.$.siteDateBlocked' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.siteDateDeBlocked' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 }
+      'lesIdSites.$.siteDateDeBlocked' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
+      'lesIdSites.$.siteDateSuppPromo' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 }
     }, {check}).newContext();
     modifNomEspSiteSchema.validate(eNM);
     if (modifNomEspSiteSchema.isValid()) {
@@ -232,69 +278,12 @@ Meteor.methods({
   suppSite : function(s){
     const suppSiteSchema = new SimpleSchema({
       lesIdSites : Array,
-      'lesIdSites.$' : Object,
-      'lesIdSites.$._id' : { type : String, max : 25 },    
-      'lesIdSites.$.siteEspace' : { type : String, max : 30 }, 
-      'lesIdSites.$.siteQuartier' : { type : String, max : 30 }, 
-      'lesIdSites.$.siteVille' : { type : String, max : 30 },
-      'lesIdSites.$.siteContact' : { type : Number, min : 600000000, max : 699999999 },
-      'lesIdSites.$.siteMail' : { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
-      'lesIdSites.$.siteOuvFeries' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermFeries' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvLundi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermLundi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvMardi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermMardi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvMercredi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermMercredi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvJeudi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermJeudi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvVendredi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermVendredi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvSamedi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermSamedi' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteOuvDimanche' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteFermDimanche' : { type : String, regEx : /^([0-1][0-9]|[2][0-3]):([0-5][0-9])$/, max : 5 },
-      'lesIdSites.$.siteEmplacement' : { type : String, max : 500 },
-      'lesIdSites.$.sitePromos' : { type : Array, optional : true },
-      'lesIdSites.$.sitePromos.$' : { type : Object, optional : true },
-      'lesIdSites.$.sitePromos.$._id' : { type : String, optional : true, max : 25 },
-      'lesIdSites.$.sitePromos.$.idPromotion' : { type : String, optional : true, max : 102 }, 
-      'lesIdSites.$.sitePromos.$.idSitePromo' : { type : String, optional : true, max : 25 }, 
-      'lesIdSites.$.sitePromos.$.typeDePromo' : { type : String, optional : true, allowedValues: ['dernierMarche', 'promotion'] },
-      'lesIdSites.$.sitePromos.$.rayonDePromo' : { type : String, optional : true, allowedValues: ['epicerieSalee', 'epicerieSucree', 'produitsFrais', 'fruitsLegumes', 'bouchPoissVol', 'boissVinLiq', 'boulPatisserie', 'fastFood', 'bazar'] },
-      'lesIdSites.$.sitePromos.$.produitNom' : { type : String, optional : true, max : 40 },
-      'lesIdSites.$.sitePromos.$.produitQte' : { type : String, optional : true, max : 40 },
-      'lesIdSites.$.sitePromos.$.idTofPromo' : { type : String, optional : true, max : 25 },
-      'lesIdSites.$.sitePromos.$.produitTof' : { type : String, optional : true, max : 130 },
-      'lesIdSites.$.sitePromos.$.produitPrix' : { type : Number, optional : true, min : 0, max : 1000000 },
-      'lesIdSites.$.sitePromos.$.prixPromo' : { type : Number, optional : true, min : 0, max : 1000000 },
-      'lesIdSites.$.sitePromos.$.produitExpiration' : Date,
-      'lesIdSites.$.sitePromos.$.promoRemise' : { type : Number, optional : true, min : 1, max : 100 },
-      'lesIdSites.$.sitePromos.$.promoExpiration' : Date,
-      'lesIdSites.$.sitePromos.$.promoDateExp' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.sitePromos.$.promoDetail' : { type : String, optional : true, max : 60 },
-      'lesIdSites.$.sitePromos.$.promoDateCreation' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.sitePromos.$.promoDateModification' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.siteNote' : { type : Number, min : 0, max : 5 },
-      'lesIdSites.$.siteVotants' : Array,
-      'lesIdSites.$.siteVotants.$': { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
-      'lesIdSites.$.siteLesNotes' : Array,
-      'lesIdSites.$.siteLesNotes.$': Object,
-      'lesIdSites.$.siteLesNotes.$.mailClient': { type : String, regEx : /^[\w._-]+@([\w._-]+\.)+[\w._-]+$/, max : 60 },
-      'lesIdSites.$.siteLesNotes.$.noteClient': { type : Number, min : 0, max : 0 },
-      'lesIdSites.$.siteLesNotes.$.dateNote': { type : Date, optional : true },
-      'lesIdSites.$.siteDateCreation' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.siteDateModification' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.siteBlocked' : { type : String, allowedValues: ['OUI', 'NON'], max : 3 },
-      'lesIdSites.$.siteDateBlocked' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
-      'lesIdSites.$.siteDateDeBlocked' : { type : String, optional : true, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 }
+      'lesIdSites.$' : { type : String, max : 25 }
     }, {check}).newContext();
-
     suppSiteSchema.validate(s);
     if (suppSiteSchema.isValid()) {
       s.lesIdSites.forEach(function(transaction){ 
-        Sites.remove({_id : transaction._id});
+        Sites.remove({_id : transaction});
       });
       return 'OK';
     }
@@ -317,17 +306,15 @@ Meteor.methods({
     const modifBlockSiteSchema = new SimpleSchema({
       id : { type : String, max : 25 }, 
       siteB : { type : String, allowedValues: ['OUI', 'NON'], max : 3 },
-      dte : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 }
+      dte : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
+      sI : { type : String, allowedValues: ['SI', 'NO'], max : 2, optional : true },
     }, {check}).newContext();
 
     modifBlockSiteSchema.validate(s);
       if (modifBlockSiteSchema.isValid()) {
-        if (s.siteB == 'OUI') {
-          Sites.update({_id : s.id}, { $set : {siteBlocked : s.siteB, siteDateBlocked : s.dte}});
-        }
-        else {
-          Sites.update({_id : s.id}, { $set : {siteBlocked : s.siteB, siteDateDeBlocked : s.dte}});
-        }
+        s.siteB == 'OUI' ? Sites.update({_id : s.id}, { $set : {siteBlocked : s.siteB, siteDateBlocked : s.dte}}) :
+                          Sites.update({_id : s.id}, { $set : {siteBlocked : s.siteB, siteDateDeBlocked : s.dte}}); 
+        if (s.sI !== undefined) { Sites.update({_id : s.id}, { $set : {siteInizio : s.sI}}); }
         return 'OK';
       }
       else { return modifBlockSiteSchema.validationErrors(); } 
@@ -343,14 +330,16 @@ Meteor.methods({
       'newPromo.typeDePromo' : { type : String, allowedValues: ['dernierMarche', 'promotion'] },
       'newPromo.rayonDePromo' : { type : String, allowedValues: ['epicerieSalee', 'epicerieSucree', 'produitsFrais', 'fruitsLegumes', 'bouchPoissVol', 'boissVinLiq', 'boulPatisserie', 'fastFood', 'bazar'] },
       'newPromo.produitNom' : { type : String, max : 40 },
-      'newPromo.produitQte' : { type : String, max : 40 },
+      // 'newPromo.produitQte' : { type : String, max : 40 },
       'newPromo.idTofPromo' : { type : String, max : 25 },
       'newPromo.produitTof' : { type : String, max : 130 },
       'newPromo.produitPrix' : { type : Number, min : 0, max : 1000000 },
       'newPromo.prixPromo' : { type : Number, min : 0, max : 1000000 },
-      'newPromo.produitExpiration' : Date,
+      // 'newPromo.produitExpiration' : Date,
+      // 'newPromo.produitExp' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'newPromo.promoRemise' : { type : Number, min : 1, max : 100 },
       'newPromo.promoExpiration' : Date,
+      'newPromo.promoExpirationTime' : { type : Number, min : 0, max : 1000000000000000000000000000000000 },
       'newPromo.promoDateExp' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'newPromo.promoDetail' : { type : String, max : 60 },
       'newPromo.promoDateCreation' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 }
@@ -375,14 +364,16 @@ Meteor.methods({
       'laPromo.typeDePromo' : { type : String, allowedValues: ['dernierMarche', 'promotion'] },
       'laPromo.rayonDePromo' : { type : String, allowedValues: ['epicerieSalee', 'epicerieSucree', 'produitsFrais', 'fruitsLegumes', 'bouchPoissVol', 'boissVinLiq', 'boulPatisserie', 'fastFood', 'bazar'] },
       'laPromo.produitNom' : { type : String, max : 40 },
-      'laPromo.produitQte' : { type : String, max : 40 },
+      // 'laPromo.produitQte' : { type : String, max : 40 },
       'laPromo.idTofPromo' : { type : String, max : 25 },
       'laPromo.produitTof' : { type : String, max : 130 },
       'laPromo.produitPrix' : { type : Number, min : 0, max : 1000000 },
       'laPromo.prixPromo' : { type : Number, min : 0, max : 1000000 },
-      'laPromo.produitExpiration' : Date,
+      // 'laPromo.produitExpiration' : Date,
+      // 'laPromo.produitExp' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'laPromo.promoRemise' : { type : Number, min : 1, max : 100 },
       'laPromo.promoExpiration' : Date,
+      'laPromo.promoExpirationTime' : { type : Number, min : 0, max : 1000000000000000000000000000000000 },
       'laPromo.promoDateExp' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
       'laPromo.promoDetail' : { type : String, max : 60 },
       'laPromo.promoDateCreation' : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 },
@@ -401,13 +392,15 @@ Meteor.methods({
   suppPromoSite : function(pS){ 
     const suppPromoSiteSchema = new SimpleSchema({
       idSite : { type : String, max : 25 },
-      idPromoSite : { type : String, max : 102 }
+      idPromoSite : { type : String, max : 102 },
+      dte : { type : String, regEx : /^(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/, max : 10 }
     }, {check}).newContext();
 
     suppPromoSiteSchema.validate(pS);
       if (suppPromoSiteSchema.isValid()) {
         Sites.update({ _id : pS.idSite }, 
-              { $pull: { sitePromos : { idPromotion : pS.idPromoSite }}});
+              { $pull: { sitePromos : { idPromotion : pS.idPromoSite }},
+                $set : { siteDateSuppPromo : pS.dte }});
         return 'OK';
       }
       else { return suppPromoSiteSchema.validationErrors(); } 

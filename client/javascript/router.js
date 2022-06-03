@@ -1,5 +1,7 @@
 Router.configure({
-	layoutTemplate : 'tmpltePrincipal'
+	layoutTemplate : 'tmpltePrincipal',
+	notFoundTemplate: 'tmplteNotExists',
+    noRoutesTemplate: 'tmplteNotExists'
 });
 
 Router.map(function(){
@@ -56,15 +58,15 @@ Router.map(function(){
 	});
 
 	this.route('/offres/:_id', function () {
-		this.subscribe('leSiteSub', this.params._id);
-		
+		const handle = Meteor.subscribe('leSiteSub', this.params._id);
 		const leSiteDesOffres = Sites.findOne({_id : this.params._id});
     	if (leSiteDesOffres !== undefined) {
     		Session.set('siteOffres', this.params._id);
-    		
-	    	this.render('tmpltePageOffresSites', {
-			    data: function () { return leSiteDesOffres; }
-			});
+    		if (handle.ready()) {
+		    	this.render('tmpltePageOffresSites', {
+				    data: function () { return leSiteDesOffres; }
+				});
+			}
     	}
 	});
 
@@ -110,16 +112,25 @@ Router.map(function(){
         }
 	});
 
+	this.route('tmpltePageUsers', { path : '/authentification/utilisateurs',
+		onBeforeAction:function(pause){
+            $('body, html').animate({
+					scrollTop : 0
+			}, 0);
+            this.next();
+        }
+	});
+
 	this.route('/authentification/sites/:_id', function () {
-		this.subscribe('leSiteSub', this.params._id);
-		
+		const handle = Meteor.subscribe('leSite_DetailSub', this.params._id);
 		const leSiteDesOffres = Sites.findOne({_id : this.params._id});
     	if (leSiteDesOffres !== undefined) {
     		Session.set('siteOffres', this.params._id);
-    		
-	    	this.render('tmpltePageSitesDetail', {
-			    data: function () { return leSiteDesOffres; }
-			});
+    		if (handle.ready()) {
+		    	this.render('tmpltePageSitesDetail', {
+				    data: function () { return leSiteDesOffres; }
+				});
+			}
     	}
 	});
 
@@ -140,4 +151,26 @@ Router.map(function(){
             this.next();
         }
 	});
+
+	this.route('tmpltePageMySpace', { path : '/myspace',
+		onBeforeAction:function(pause){
+            $('body, html').animate({
+					scrollTop : 0
+			}, 0);
+			const handle = Meteor.subscribe('mySite');
+		 	const handleTwo = Meteor.subscribe('mySiteTwo');
+		 	if (handle.ready() || handleTwo.ready()) {
+		     	this.render('tmpltePageMySpace');
+		 	}
+            this.next();
+        }
+	});
+
+	// this.route('/myspace', function () {
+	// 	const handle = Meteor.subscribe('mySite');
+	// 	const handleTwo = Meteor.subscribe('mySiteTwo');
+	// 	if (handle.ready() || handleTwo.ready()) {
+	//     	this.render('tmpltePageMySpace');
+	// 	}
+	// });
 });
