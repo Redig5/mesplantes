@@ -1,9 +1,8 @@
-ImagesPromo = new FilesCollection({
+ImagesPlantes = new FilesCollection({
 	debug: true,
-	storagePath: '/imagesPromos',
+	storagePath: '/imagesPlantes',
 	permissions: 0o774,
 	parentDirPermissions: 0o774,
-	collectionName: 'ImagesPromo',
+	collectionName: 'ImagesPlantes',
 	allowClientCode: true, 
 });
-export default ImagesPromo; 

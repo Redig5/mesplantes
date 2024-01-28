@@ -10,18 +10,7 @@ import './publications.js';
 
 import SimpleSchema from 'simpl-schema';
 
-Meteor.startup(function () {
-
-  smtp = {
-    username: 'postmaster@sandbox88acd4484e09457291a0914fab46d6bc.mailgun.org',
-    password: 'c456ddb6249fb84ed7edd3f3e268b28a-4879ff27-dcb82954',
-    server:   'smtp.mailgun.org',
-    port: 587
-  }
-  
-  process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port;
-});
-
+/**/
 Cloudinary.config({
   cloud_name: 'dmarchedotcom',
   api_key: '989953378497139',

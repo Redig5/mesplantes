@@ -1,0 +1,1 @@
+Arrosages = new Meteor.Collection('arrosages');

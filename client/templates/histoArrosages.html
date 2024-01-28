@@ -1,0 +1,75 @@
+<template name="tmpltePageMesArrosages">
+  {{> tmplteNavigationMesArrosages }}
+  <div class="container containerMesArrosages" id="idContainerMesArrosages">
+    {{> tmplteMesArrosages }}
+    <div class="footerAccueil" id="idSiteCache">
+      <img src="images/arrosage.png" loading="lazy" width="400" height="350" class="footerPlantes">
+    </div>
+  </div>
+</template>
+
+<template name="tmplteMesArrosages">
+  <div class="accueil accueilMesArrosages starter-template" id="idMesArrosages">
+    {{#if currentUser}}
+      <div class="divGdEcran">
+        <h1 class="titrePage">Historique des arrosages</h1>
+        <div class="divMesArrosages">
+          <div class="containLesArrosages">
+            {{#each arrosage in lesArrosages}}
+            <div class="lesArrosages">
+              <div class="panel panel-default js-modif-arrosage">
+                <div class="panel-body">
+                  <p id="{{ arrosage._id }}">
+                    {{ arrosage.dateArrosage }}   :  {{ arrosage.nomPlante }} - {{ arrosage.especePlante }}
+                  </p>
+                </div>    
+              </div>
+            </div>
+            {{else}}
+              <div>
+                <p>Aucun arrosage effectué pour l'instant !</p>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    {{ else }}
+      <a class="seConnecter" href="/">
+        <button class="btn" type="submit">
+          Se connecter
+        </button>
+      </a>
+    {{ /if }} 
+  </div>  
+</template>
+
+<template name="tmplteNavigationMesArrosages">
+  <nav id="navigationArrosages" class="navbar navbar-inverse navbar-fixed-top navigation">
+    <div id="idNavigationArrosages" class="container">
+      <div class="navbar-header">
+        {{#if currentUser}}
+          <button type="button" class="navbar-toggle collapsed btnCreation" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        {{ /if }}
+        <a class="navbar-brand" href="/">
+          <img src="images/logo.png" loading="lazy" width="40" height="40">
+        </a>
+      </div>
+      {{#if currentUser}}
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="text-center" href="/">Accueil</a></li>
+            <li><a class="text-center" href="/mesplantes">Mes plantes</a></li>
+            <li><a class="text-center" href="/ajoutplante">Nouvelle plante</a></li>
+            <li><a class="text-center active" href="#">Tous les arrosages</a></li>
+            {{> tmplteLogOut }}
+          </ul>
+        </div>
+      {{ /if }}
+    </div>
+  </nav>
+</template>

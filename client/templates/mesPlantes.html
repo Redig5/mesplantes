@@ -1,0 +1,165 @@
+<template name="tmpltePageMesPlantes">
+  {{> tmplteNavigationMesPlantes }}
+  <div class="container containerMesPlantes" id="idContainerMesPlantes">
+    {{> tmplteMesPlantes }}
+    <div class="footerAccueil" id="idSiteCache">
+      <img src="images/arrosage.png" loading="lazy" width="1200" height="350" class="footerPlantes">
+    </div>
+  </div>
+</template>
+
+<template name="tmplteMesPlantes">
+  <div class="accueil accueilMesPlantes starter-template" id="idMesPlantes">
+    {{#if currentUser}}
+      <div class="divGdEcran">
+        <h1 class="titrePage">Mes plantes</h1>
+        <div class="divMesPlantes">
+          {{#let qteP=qtePlantes}}
+            <p class="qtePlantes">{{ qteP }} plante(s)</p>
+            <div class="containLesPlantes">
+              {{#each plante in lesPlantes}}
+              <div class="lesPlantes">
+                <div class="panel panel-default">
+                  <figure class="panel-body">
+                    <p class="planteTof">
+                      <img src="{{plante.urlTofPlante}}" loading="lazy">
+                    </p>
+                    <figcaption class="planteIdentification">
+
+                    </figcaption>
+                  </figure>
+                </div>
+                {{> tmplteChaquePlante plante = plante }}
+              </div>
+              {{else}}
+                <div>
+                  <p>Vous n'avez aucune plante pour le moment !</p>
+                </div>
+              {{/each}}
+            </div>
+          {{/let}}
+        </div>
+      </div>
+    {{ else }}
+      <a class="seConnecter" href="/">
+        <button class="btn" type="submit">
+          Se connecter
+        </button>
+      </a>
+    {{ /if }} 
+  </div>  
+</template>
+
+<template name="tmplteChaquePlante">
+  <div class="panel panel-default js-modif-plante">
+    <div class="panel-body">
+      <p>
+        {{ plante.nomPlante }}
+        <span class="glyphicon glyphicon-chevron-right pull-right" id="{{ plante._id }}"></span>
+      </p>
+    </div>    
+  </div>
+</template>
+
+<template name="tmplteModalChaquePlante">
+  <div class="modal fade" tabindex="-1" role="dialog" id="idModalChaquePlante">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h12 class="bold black">FERMER</h12>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="divArrosages non" id="idDivArrosages">
+            <p class="titreModal">Les arrosages de cette plante : </p>
+            {{#each arrosage in lesArrosages}}
+              <div class="form-group">
+                <p class="form-control col-lg-12 lightBack" id="{{arrosage._id}}">- {{ arrosage.dateArrosage }}</p>
+              </div>
+            {{else}}
+              <div>
+                <p class="arrosageText">Aucun arrosage effectué pour le moment !</p>
+              </div>
+            {{/each}}
+          </div>
+          <form class="js-modif-plante form-horizontal col-lg-12" id="idModifPlante">
+            <div class="form-group">
+              <label class="col-lg-12" for="idNomPlante">Nom plante : </label>
+              <input type="text" name="nomPlante" class="form-control" id="idNomPlante" maxlength="30" value="{{ plante.nomPlante }}" disabled>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-12" for="idEspecePlante">Espèce plante : </label>
+              <input type="text" name="especePlante" class="form-control" id="idEspecePlante" maxlength="30" value="{{ plante.especePlante }}" disabled>
+            </div>
+            <div class="form-group">
+              <p class="col-lg-12 bold">Date achat : </p>
+              <p class="form-control col-lg-12" id="idDateAchatPlante">{{ plante.dateAchat }}</p>
+            </div>
+            <div class="form-group">
+              <p class="col-lg-12 bold">Fréquence arrosage : </p>
+              {{#if $eq plante.frequenceArrosagePlante 1}}
+                <p class="form-control col-lg-12" id="idFrequenceArrosagePlante">Tous les jours</p>
+              {{ else }}
+                <p class="form-control col-lg-12" id="idFrequenceArrosagePlante">Tous les {{ plante.frequenceArrosagePlante }} jours</p>
+              {{ /if }}
+            </div>
+            <div class="form-group">
+              <p class="col-lg-12 bold">Quantité eau d'arrosage : </p>
+              <p class="form-control col-lg-12" id="idQteEauArrosage">{{ plante.qteEauArrosage }} cl</p>
+            </div>
+            <div class="form-group">
+              <p class="col-lg-12 bold">Date création fiche : </p>
+              <p class="form-control col-lg-12" id="idQteEauArrosage">{{ plante.dateCreation }}</p>
+            </div>
+            <div class="form-group">
+              <p class="col-lg-12 bold">Date dernier arrosage : </p>
+              {{#if plante.dateDernierArrosageTime}}
+                <p class="form-control col-lg-12" id="idDateDernierArrosage">{{ plante.dateDernierArrosage }}</p>
+              {{ else }}
+                <p class="form-control col-lg-12" id="idDateDernierArrosage">Aucun arrosage encore</p>
+              {{ /if }} 
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary majuscule js-btn-modifier" name="btnModifier">Modifier fiche</button>
+          <button type="button" class="btn majuscule js-btn-arroser" name="btnSupprimer" id="idBtnArroser">Arroser</button>
+          <button type="button" class="btn btn-success majuscule js-btn-historiqArrosage" name="btnHistoPlante">Les arrosages de la plante</button>
+          <button type="button" class="btn btn-danger majuscule js-btn-supprimer" name="btnSupprimer" id="idBtnSupprimer">Supprimer plante</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tmplteNavigationMesPlantes">
+  <nav id="navigationMesPlantes" class="navbar navbar-inverse navbar-fixed-top navigation">
+    <div id="idNavigationMesPlantes" class="container">
+      <div class="navbar-header">
+        {{#if currentUser}}
+          <button type="button" class="navbar-toggle collapsed btnCreation" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        {{ /if }}
+        <a class="navbar-brand" href="/">
+          <img src="images/logo.png" loading="lazy" width="40" height="40">
+        </a>
+      </div>
+      {{#if currentUser}}
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="text-center" href="/">Accueil</a></li>
+            <li><a class="text-center active" href="#">Mes plantes</a></li>
+            <li><a class="text-center" href="/ajoutplante">Nouvelle plante</a></li>
+            <li><a class="text-center" href="/arrosages">Tous les arrosages</a></li>
+            {{> tmplteLogOut }}
+          </ul>
+        </div>
+      {{ /if }}
+    </div>
+  </nav>
+</template>

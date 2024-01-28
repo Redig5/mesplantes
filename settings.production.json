@@ -1,16 +1,4 @@
-{ 
-	"galaxy.meteor.com": {
-      "env": {
-	     "MONGO_OPLOG_URL": "mongodb://oplogger:3DSwbAUFFPqfToYMZVzBEMWPTuxzFQ@8d03dbbb-3fc8-4329-90ed-dd3becc4872b.lmarket-8975.mongo.a.osc-fr1.scalingo-dbs.com:31840/local?authSource=admin&replicaSet=lmarket-8975-rs0&ssl=true",
-	     "MONGO_URL": "mongodb://lmarket-8975:nYSu77IOc24OJ8VCz_Vj@8d03dbbb-3fc8-4329-90ed-dd3becc4872b.lmarket-8975.mongo.a.osc-fr1.scalingo-dbs.com:31840/lmarket-8975?replicaSet=lmarket-8975-rs0&ssl=true",
-	     "ROOT_URL": "https://lmarket.osc-fr1.scalingo.io"
-	   }
-    }, 
- 	// "env": {
-  //    "MONGO_OPLOG_URL": "mongodb://oplogger:3DSwbAUFFPqfToYMZVzBEMWPTuxzFQ@8d03dbbb-3fc8-4329-90ed-dd3becc4872b.lmarket-8975.mongo.a.osc-fr1.scalingo-dbs.com:31840/local?authSource=admin&replicaSet=lmarket-8975-rs0&ssl=true",
-  //    "MONGO_URL": "mongodb://lmarket-8975:nYSu77IOc24OJ8VCz_Vj@8d03dbbb-3fc8-4329-90ed-dd3becc4872b.lmarket-8975.mongo.a.osc-fr1.scalingo-dbs.com:31840/lmarket-8975?replicaSet=lmarket-8975-rs0&ssl=true",
-  //    "ROOT_URL": "https://lmarket.osc-fr1.scalingo.io"
-  //  }, 
+{  
    "public": {
     	"cloudinary": {"cloud_name": "dmarchedotcom", "upload_preset": "av1blbpc"}
    }
